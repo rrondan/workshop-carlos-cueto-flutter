@@ -3,21 +3,8 @@ import 'package:workshopcueto/models/news.dart';
 import 'package:workshopcueto/service/news_service.dart';
 import 'widgets/news_card.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final List<String> noticias = [
-    "Flutter 3.0 ha sido lanzado",
-    "La comunidad Flutter crece rápidamente",
-    "Nuevas herramientas para Flutter Developers",
-    "Google lanza nuevo soporte para Flutter en Fuchsia",
-    "Cómo optimizar tus apps en Flutter",
-  ];
+class MyHomePage extends StatelessWidget {
+  MyHomePage({super.key});
 
   final NewsService newsService = NewsService();
 
@@ -26,6 +13,49 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Noticias'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+             const UserAccountsDrawerHeader(
+              accountName: Text("Richard Developer"),
+              accountEmail: Text("richard.dev@example.com"),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: AssetImage(
+                    "assets/images/profile_placeholder.png"),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text("Inicio"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.favorite),
+              title: const Text("Favoritos"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text("Configuraciones"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text("Cerrar sesión"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
       body: FutureBuilder<List<News>>(
         future: newsService.fetchNews(),

@@ -3,7 +3,7 @@ import 'package:workshopcueto/models/news.dart';
 import 'package:http/http.dart' as http;
 
 class NewsService {
-  final String _apiKey = '147462a6e3c34bdd8e608ee6931c5a12';
+  final String _apiKey = '{YOUR_API_KEY}';
   final String _url =
       'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=';
 
