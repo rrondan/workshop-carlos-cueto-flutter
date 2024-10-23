@@ -312,7 +312,96 @@ return Scaffold(
 }
 ```
 
-Solo deben actualizar el body, el resto se mantiene igual, corren la app y deberia funcionar.
+Solo deben actualizar el body, el resto se mantiene igual, nos falta el `NewsCard` eso lo van a crear dentro de de esta carpeta: `lib/pages/home/widgets/` con el nombre `news_card.dart`
+Y pones este código:
+
+```dart
+import 'package:flutter/material.dart';
+
+class NewsCard extends StatelessWidget {
+  final String title;
+  final String description;
+  final String imageUrl;
+  final String url;
+
+  const NewsCard({super.key,
+    required this.title,
+    required this.description,
+    required this.imageUrl,
+    required this.url,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 5,
+      margin: const EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Imagen en la parte superior
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+            ),
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: 200,
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  'assets/images/placeholder.jpg',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 200,
+                );
+              },
+            ),
+          ),
+          // Título y descripción
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  description,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    // Acción para abrir la noticia en un navegador
+                    print('Abrir noticia: $url');
+                  },
+                  child: const Text('Leer más'),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+Listo eso deberia funcionar, arreglen sus importaciones de los archivos y deberia funcionarles.
 
 Si no funciona revisen que hayan agregado el API_KEY en el archivo `news_service.dart` y que hayan importado correctamente las librerias.
 
@@ -320,3 +409,19 @@ y Si aun asi les sale error en la App, tienes este repositorio donde podas ver e
 
 ¡Felicidades! Has completado el taller de Flutter.
 
+# Workshop Carlos Cueto Fernandini - Flutter
+## Mejoras adicionales que pueden hacer
+- Agregar un `BottomNavigationBar` para navegar entre diferentes categorías de noticias.
+- Agregar un `FloatingActionButton` para recargar las noticias.
+- Agregar un `SearchBar` para buscar noticias.
+- Agregar un `WebView` para mostrar la noticia completa.
+- Agregar un `SharedPreferences` para guardar las noticias favoritas.
+- Agregar un `Provider` para manejar el estado de la aplicación.
+- Agregar un `Firebase` para autenticación de usuarios.
+- Agregar un `Firebase` para guardar las noticias favoritas.
+- Agregar un `Firebase` para enviar notificaciones push.
+
+## Recursos adicionales
+- [Flutter Documentation](https://docs.flutter.dev/)
+- [Dart Documentation](https://dart.dev/guides)
+- [NewsAPI Documentation](https://newsapi.org/docs)
